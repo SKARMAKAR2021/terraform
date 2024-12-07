@@ -24,10 +24,10 @@ stages:
     displayName: "Terraform Run"
     steps:
     - task: AzureCLI@2
-      inputs:
+      #inputs:
         #azureSubscription: "0f07d526-e664-4e30-8809-1a816b56d34a"
-        scriptType: bash
-        inlinescript: |
+    - script: |
+    
          terraform init
          terraform validate
          terraform plan
