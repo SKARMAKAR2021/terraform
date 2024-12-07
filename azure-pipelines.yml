@@ -15,6 +15,7 @@ variables:
   ARM_SUBSCRIPTION_ID: $(subscriptionId) 
   ARM_TENANT_ID: $(tenantId)
 
+
 stages:
 - stage: plan
   displayName: "Terraform Plan for AutoScale VMs"
@@ -26,4 +27,5 @@ stages:
        terraform init
        terraform validate
        terraform plan
+
        
