@@ -20,9 +20,12 @@ stages:
 - stage: plan
   displayName: "Terraform Plan for AutoScale VMs"
   jobs:
-  - job: TerraformPlan
-    displayName: "Terraform Plan"
+  - job: Terraformjob
+    displayName: "Terraform Run"
     steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 
     - script: |
        terraform init
        terraform validate
