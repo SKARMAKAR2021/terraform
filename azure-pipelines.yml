@@ -1,0 +1,22 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: plan
+  displayName: "Terraform Plan for AutoScale VMs"
+  jobs:
+  - job: TerraformPlan
+    displayName: "Terraform Plan"
+    steps:
+    - script: |
+       terraform init
+       terraform validate
+       
