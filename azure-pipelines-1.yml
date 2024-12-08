@@ -3,45 +3,31 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-name: Terraform deploy Log Analytics
-
 trigger:
-  - main
+- main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
 variables:
-  azureServiceConnection: 'Azure subscription 1'  
+  ARM_CLIENT_ID: $(servicePrincipalId) 
+  ARM_CLIENT_SECRET: $(servicePrincipalKey) 
+  ARM_SUBSCRIPTION_ID: $(subscriptionId) 
+  ARM_TENANT_ID: $(tenantId)
+
 
 stages:
-  - stage: Plan
-    displayName: 'Terraform Plan'
-    jobs:
-      - job: TerraformPlan
-        displayName: 'Terraform Plan'
-        steps:
-          # Step 1: Initialize and Plan Terraform
-          - task: AzureCLI@2
-            inputs:
-              azureSubscription: $(azureServiceConnection)  # The service connection defined in your pipeline
-              scriptType: bash
-              scriptLocation: inlineScript
-              inlineScript: |
-                echo "Setting up Azure authentication using the service principal credentials from the service connection"
-                echo "Terraform init..."
-                terraform init
-                echo "Terrform plan..."
-                terraform plan
-            displayName: 'Terraform init and plan'
-          
-          # Step 2: Deploy
-          - task: AzureCLI@2
-            inputs:
-              azureSubscription: $(azureServiceConnection)  # The service connection defined in your pipeline
-              scriptType: bash
-              scriptLocation: inlineScript
-              inlineScript: |
-                echo "Terraform apply"
-                terraform apply -auto-approve
-            displayName: 'Terraform apply'
+- stage: plan
+  displayName: "Terraform Plan for AutoScale VMs"
+  jobs:
+  - job: Terraformjob
+    displayName: "Terraform Run"
+    steps:
+    - task: AzureCLI@2
+      #inputs:
+        #azureSubscription: "0f07d526-e664-4e30-8809-1a816b56d34a"
+    - script: |
+    
+         terraform init
+         terraform validate
+         terraform plan
