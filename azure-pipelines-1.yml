@@ -25,7 +25,7 @@ stages:
     steps:
     - task: AzureCLI@2
       inputs:
-        #azureSubscription: "0f07d526-e664-4e30-8809-1a816b56d34a"
+        #azureSubscription: $(azureServiceConnection)
         scriptType: bash
         inlineScript: |
          terraform init
